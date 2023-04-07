@@ -4,7 +4,7 @@ function page() {
     let btnAdd = document.getElementById('btn-add');
     let btnAdSubtract = document.getElementById('btn-subtract');
     let btnMultiply = document.getElementById('btn-multiply');
-    let btnDivid = document.getElementById('btn-divid');
+    let btnDivide = document.getElementById('btn-divide');
     let btnPercentage = document.getElementById('btn-percentage');
 
     let btnC = document.getElementById('btn-c');
@@ -42,4 +42,6 @@ function multiply(a, b) {
     return a * b;
 }
 
-
+function divide(a, b) {
+    return a / b;
+}
