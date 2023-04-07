@@ -1,4 +1,7 @@
 window.addEventListener('load', page);
+let number1 = 0;
+let number2 = 0;
+let operator = '';
 
 function page() {
     let btnAdd = document.getElementById('btn-add');
@@ -43,9 +46,25 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-    return a / b;
+    if (b !== 0) {
+        return a / b;
+    }
+    else{
+        return "You can't divide by 0";
+    }
 }
 
 function percentage(a) {
     return a / 100;
+}
+
+function operate(number1, number2, operator) {
+    switch(operator) {
+        case 'add': return add(number1, number2);break;
+        case 'subtract': return subtract(number1, number2);break;
+        case 'multiply': return multiply(number1, number2); break;
+        case 'divide': return divide(number1, number2);break;
+        default: 'Error';
+    }
+    
 }
