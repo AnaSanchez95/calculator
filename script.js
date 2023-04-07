@@ -30,12 +30,7 @@ function show(operations) {
     screen.innerText(operations);    
 }
 
-function add(array){
-    let add = 0;
-
-    array.forEach(number => {
-        add += number;
-    });
-    console.log(add);
+function add(a, b){
+    return a + b;
 }
 
