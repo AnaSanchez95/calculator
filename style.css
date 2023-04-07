@@ -29,6 +29,28 @@ header{
     width: 350px;
     margin-top: 20px;
     border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#display {
+    
+    background-color: aqua;    
+    height: 130px;
+    width: 330px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+#display p{    
+    height: 50px;
+    width: 300px;
+    margin: 0;
+    font-size: 40px;
+    text-align: end;
 }
 #buttons{
     display: grid;

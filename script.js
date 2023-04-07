@@ -2,6 +2,7 @@ window.addEventListener('load', page);
 let number1 = 0;
 let number2 = 0;
 let operator = '';
+let displayValue = '';
 
 function page() {
     let btnAdd = document.getElementById('btn-add');
@@ -26,11 +27,8 @@ function page() {
     let btn9 = document.getElementById('btn-9');
     let btn0 = document.getElementById('btn-0');
     let btn00 = document.getElementById('btn-00');
-}
 
-function show(operations) {
-    let screen = document.getElementById('screen');
-    screen.innerText(operations);    
+    
 }
 
 function add(a, b){
@@ -65,6 +63,15 @@ function operate(number1, number2, operator) {
         case 'multiply': return multiply(number1, number2); break;
         case 'divide': return divide(number1, number2);break;
         default: 'Error';
-    }
-    
+    }    
+}
+
+function showOperate(operations) {
+    let displayOperate = document.getElementById('operate');
+    displayOperate.innerText = operations;    
+}
+
+function showAnswer(answers) {
+    let displayAnswer = document.getElementById('answer');
+    return displayAnswer.innerText = answers;
 }
