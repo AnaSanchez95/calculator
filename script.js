@@ -1,4 +1,5 @@
 window.addEventListener('load', page);
+let arrayDisplay = [];
 let number1 = 0;
 let number2 = 0;
 let operator = '';
@@ -28,26 +29,27 @@ function page() {
     let btn0 = document.getElementById('btn-0');
     let btn00 = document.getElementById('btn-00');
 
-    btnAdd.addEventListener('click', function() {displayValue += '+';showOperate();})
-    btnSubtract.addEventListener('click', function() {displayValue += '−';showOperate();});
-    btnMultiply.addEventListener('click', function() {displayValue += '×';showOperate();});
-    btnDivide.addEventListener('click', function() {displayValue += '÷';showOperate();});
+    btnAdd.addEventListener('click', pressAdd)
+    btnSubtract.addEventListener('click', pressSubtract);
+    btnMultiply.addEventListener('click', pressMultiply);
+    btnDivide.addEventListener('click', pressDivide);
+    btnPercentage.addEventListener('click', presPercentage);
 
     btnC.addEventListener('click', clearDisplay);
-    btnPoint.addEventListener('click', function() {displayValue += '.';showOperate();})
+    btnPoint.addEventListener('click', pressPoint);
     btnEqual.addEventListener('click', pressEqual);
 
-    btn1.addEventListener('click', function() {displayValue += '1';showOperate();})
-    btn2.addEventListener('click', function() {displayValue += '2';showOperate();})
-    btn3.addEventListener('click', function() {displayValue += '3';showOperate();})
-    btn4.addEventListener('click', function() {displayValue += '4';showOperate();})
-    btn5.addEventListener('click', function() {displayValue += '5';showOperate();})
-    btn6.addEventListener('click', function() {displayValue += '6';showOperate();})
-    btn7.addEventListener('click', function() {displayValue += '7';showOperate();})
-    btn8.addEventListener('click', function() {displayValue += '8';showOperate();})
-    btn9.addEventListener('click', function() {displayValue += '9';showOperate();})
-    btn0.addEventListener('click', function() {displayValue += '0';showOperate();})
-    btn00.addEventListener('click', function() {displayValue += '00';showOperate();})
+    btn1.addEventListener('click', press1);
+    btn2.addEventListener('click', press2);
+    btn3.addEventListener('click', press3);
+    btn4.addEventListener('click', press4);
+    btn5.addEventListener('click', press5);
+    btn6.addEventListener('click', press6);
+    btn7.addEventListener('click', press7);
+    btn8.addEventListener('click', press8);
+    btn9.addEventListener('click', press9);
+    btn0.addEventListener('click', press0);
+    btn00.addEventListener('click', press00);
     
 }
 
@@ -78,11 +80,11 @@ function percentage(a) {
 
 function operate(number1, number2, operator) {
     switch(operator) {
-        case 'add': return add(number1, number2);break;
-        case 'subtract': return subtract(number1, number2);break;
-        case 'multiply': return multiply(number1, number2); break;
-        case 'divide': return divide(number1, number2);break;
-        case 'percentage': return percentage(number1);break;
+        case '+': return add(number1, number2);break;
+        case '−': return subtract(number1, number2);break;
+        case '×': return multiply(number1, number2); break;
+        case '÷': return divide(number1, number2);break;
+        case '%': return percentage(number1);break;
         default: 'Error';
     }    
 }
@@ -96,63 +98,71 @@ function showAnswer(answers) {
     let displayAnswer = document.getElementById('answer');
     return displayAnswer.innerText = answers;
 }
-function saveNumber1() {
-    let num = '';
+
+function saveNumbers() {
+    let arrayNumbers = [];
+    let newIndex = 0;
     let flag = false;
 
-    for(let i = 0; i < displayValue.length; i++){
+    for (i = 0; i < arrayDisplay.length; i++){
+        let aux = arrayDisplay[i];    
 
-        if(flag === false){
-            num = displayValue.charAt(i);
-            flag = true;
+        if (flag === false){
+            arrayNumbers[newIndex] = aux;
+            flag = true;           
         }
-        else{
-            if(displayValue.charAt(i) !== '%' 
-            && displayValue.charAt(i) !== '÷'
-            && displayValue.charAt(i) !== '×'
-            && displayValue.charAt(i) !== '−'
-            && displayValue.charAt(i) !== '+'
-            && displayValue.charAt(i) !== '=') {
-                num += displayValue.charAt(i);
+        else {
+            if(aux !== '%' && aux !== '÷' && aux !== '×'
+            && aux !== '−' && aux !== '+' && aux !== '='){
+                arrayNumbers[newIndex] += aux;
+                                
             }
-            else{
-                break;
+            else {
+                newIndex++;
+                arrayNumbers[newIndex] = aux;
+                newIndex++;
+                flag = false;
             }
         }
     }
-    return num;
+    return arrayNumbers;
 }
 
-function saveNumber2() {
-    let num = '';
-    let num2 = '';
+function transformArray() {
+    let arrayNumbers = saveNumbers();
+    let num1 = 0;
+    let num2 = 0;
+    let operator = '';
     let flag = false;
-
-    for(let i = (displayValue.length-1); i > 0; i--){
-
-        if(flag === false){
-            num = displayValue.charAt(i);
-            flag = true;
+        
+    for (let i = 0; i < arrayNumbers.length; i){
+        let aux = arrayNumbers.shift();
+        
+        if(flag === false) {
+            if (aux !== '%' && aux !== '÷' && aux !== '×'
+            && aux !== '−' && aux !== '+' && aux !== '=') {
+                num1 = parseFloat(aux);                
+                flag = true;
+            }
+            else {
+                return 'Try with a number';
+            }
         }
-        else{
-            if(displayValue.charAt(i) !== '%' 
-            && displayValue.charAt(i) !== '÷'
-            && displayValue.charAt(i) !== '×'
-            && displayValue.charAt(i) !== '−'
-            && displayValue.charAt(i) !== '+'
-            && displayValue.charAt(i) !== '=') {
-                num += displayValue.charAt(i);
+        else {
+            if (aux !== '%' && aux !== '÷' && aux !== '×'
+            && aux !== '−' && aux !== '+' && aux !== '=') {
+                num2 = parseFloat(aux);
+                num1 = operate(num1, num2, operator);
+                showAnswer(num1);                               
             }
-            else{
-                break;
+            else if (aux !== '='){
+                operator = aux;                
             }
-        }        
-    }
-    for(let i = num.length; i > 0; i--){
-        num2 += num.charAt(i);
-    }
-    return num2;
+        }               
+    }   
+    
 }
+
 function saveOperator() {
     let symbol = '';
     for (let i = 0; i < displayValue.length; i++){
@@ -183,14 +193,137 @@ function clearAnswer() {
 }
 
 function clearDisplay() {
-    clearOperate();
-    clearAnswer();
+    location.reload();
+}
+
+function pressPoint() {
+    displayValue += '.';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '.';
+    console.log(arrayDisplay);
+}
+
+function pressAdd() {
+    displayValue += '+';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '+';
+    console.log(arrayDisplay);
+}
+
+function pressSubtract() {
+    displayValue += '−';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '−';
+    console.log(arrayDisplay);
+}
+
+function pressMultiply() {
+    displayValue += '×';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '×';
+    console.log(arrayDisplay);
+}
+
+function pressDivide() {
+    displayValue += '÷';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '÷';
+    console.log(arrayDisplay);
+}
+
+function presPercentage() {
+    displayValue += '%';
+    showOperate();
+    arrayDisplay[displayValue.length-1] = '%';
+    console.log(arrayDisplay);
 }
 
 function pressEqual(){
     displayValue += '=';showOperate();
-    number1 = parseFloat(saveNumber1());
-    number2 = parseFloat(saveNumber2());
-    operator = saveOperator();
-    showAnswer(operate(number1, number2, operator));
+    arrayDisplay[displayValue.length-1] = '=';
+    console.log(arrayDisplay);
+    transformArray();
+    // number1 = parseFloat(saveNumber1());
+    // number2 = parseFloat(saveNumber2());
+    // operator = saveOperator();
+    // showAnswer(operate(number1, number2, operator));
 }
+
+function press1() {
+    displayValue += '1';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '1';
+    console.log(arrayDisplay);
+}
+
+function press2() {
+    displayValue += '2';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '2';
+    console.log(arrayDisplay);
+}
+
+function press3() {
+    displayValue += '3';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '3';
+    console.log(arrayDisplay);
+}
+
+function press4() {
+    displayValue += '4';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '4';
+    console.log(arrayDisplay);
+}
+
+function press5() {
+    displayValue += '5';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '5';
+    console.log(arrayDisplay);
+}
+
+function press6() {
+    displayValue += '6';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '6';
+    console.log(arrayDisplay);
+}
+
+function press7() {
+    displayValue += '7';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '7';
+    console.log(arrayDisplay);
+}
+
+function press8() {
+    displayValue += '8';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '8';
+    console.log(arrayDisplay);
+}
+
+function press9() {
+    displayValue += '9';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '9';
+    console.log(arrayDisplay);
+}
+
+function press0() {
+    displayValue += '0';
+    showOperate();    
+    arrayDisplay[displayValue.length-1] = '0';
+    console.log(arrayDisplay);
+}
+
+function press00() {
+    displayValue += '00';
+    showOperate();    
+    arrayDisplay[displayValue.length-2] = '0';
+    arrayDisplay[displayValue.length-1] = '0';
+    console.log(arrayDisplay);
+}
+
