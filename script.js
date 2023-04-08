@@ -36,8 +36,9 @@ function page() {
     btnPercentage.addEventListener('click', presPercentage);
 
     btnC.addEventListener('click', clearDisplay);
+    btnDel.addEventListener('click', pressDel)
     btnPoint.addEventListener('click', pressPoint);
-    btnEqual.addEventListener('click', pressEqual);
+    btnEqual.addEventListener('click', pressEqual);    
 
     btn1.addEventListener('click', press1);
     btn2.addEventListener('click', press2);
@@ -153,7 +154,7 @@ function transformArray() {
             && aux !== '−' && aux !== '+' && aux !== '=') {
                 num2 = parseFloat(aux);
                 num1 = operate(num1, num2, operator);
-                showAnswer(num1);                               
+                showAnswer(roundDecimals(num1));                               
             }
             else if (aux !== '='){
                 operator = aux;                
@@ -163,20 +164,14 @@ function transformArray() {
     
 }
 
-function saveOperator() {
-    let symbol = '';
-    for (let i = 0; i < displayValue.length; i++){
-        let aux = displayValue.charAt(i);
-        switch(aux){
-            case '%': symbol = 'percentage';break;
-            case '÷': symbol = 'divide';break;
-            case '×': symbol = 'multiply';break;
-            case '−': symbol = 'subtract';break;
-            case '+': symbol = 'add';break;
-            default: continue;
-        }
+function roundDecimals(number, decimals = 2) {
+    let fractionalPart = number.toString().split('.')[1];
+    if(!fractionalPart || fractionalPart.length <= 2){
+        return number
     }
-    return symbol;    
+    else{
+        return Number(number.toFixed(decimals));
+    }
 }
 
 function clearOperate() {
@@ -194,6 +189,12 @@ function clearAnswer() {
 
 function clearDisplay() {
     location.reload();
+}
+
+function pressDel() {
+    arrayDisplay.pop();
+    displayValue = displayValue.substring(0, displayValue.length - 1);
+    showOperate();
 }
 
 function pressPoint() {
@@ -239,14 +240,16 @@ function presPercentage() {
 }
 
 function pressEqual(){
-    displayValue += '=';showOperate();
+    if(displayValue === ''){
+        showAnswer('Error')
+    }
+    else {
+        displayValue += '=';showOperate();
     arrayDisplay[displayValue.length-1] = '=';
     console.log(arrayDisplay);
     transformArray();
-    // number1 = parseFloat(saveNumber1());
-    // number2 = parseFloat(saveNumber2());
-    // operator = saveOperator();
-    // showAnswer(operate(number1, number2, operator));
+    displayValue = '';
+    }    
 }
 
 function press1() {
