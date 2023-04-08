@@ -64,4 +64,8 @@ button{
     width: 90px;
     border-radius: 50%;
     font-size: 30px;
+    background-color: rgb(190, 234, 255);
+}
+.operator {
+    background-color: rgb(124, 201, 234);
 }

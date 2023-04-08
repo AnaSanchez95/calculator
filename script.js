@@ -49,6 +49,11 @@ function page() {
     btn0.addEventListener('click', press0);
     btn00.addEventListener('click', press00);
     
+    mouseOverNumberBtn();
+    mouseOutNumberBtn();
+    mouseOverOperatorBtn();
+    mouseOutOperatorBtn();
+
 }
 
 function add(a, b){
@@ -96,6 +101,51 @@ function showOperate() {
 function showAnswer(answers) {
     let displayAnswer = document.getElementById('answer');
     return displayAnswer.innerText = answers;
+}
+
+function mouseOverNumberBtn() {
+    let buttons = document.querySelectorAll('.number');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('mouseover', () => changeNumberBtn(btn));
+    })
+}
+function changeNumberBtn (btn) {
+    btn.style.backgroundColor = 'rgb(19, 230, 201)';
+}
+
+function mouseOutNumberBtn() {
+    let buttons = document.querySelectorAll('.number');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('mouseout', () => changeNumberBtnOut(btn));
+    })
+}
+function changeNumberBtnOut (btn) {
+    btn.style.backgroundColor = 'rgb(190, 234, 255)';
+}
+
+function mouseOverOperatorBtn() {
+    let buttons = document.querySelectorAll('.operator');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('mouseover', () => changeOperatorBtn(btn));
+    })
+}
+
+function changeOperatorBtn (btn) {
+    btn.style.backgroundColor = 'rgb(65, 241, 247)';
+}
+
+function mouseOutOperatorBtn() {
+    let buttons = document.querySelectorAll('.operator');
+
+    buttons.forEach(btn => {
+        btn.addEventListener('mouseout', () => changeOperatorBtnOut(btn));
+    })
+}
+function changeOperatorBtnOut (btn) {
+    btn.style.backgroundColor = 'rgb(124, 201, 234)';
 }
 
 function saveNumbers() {
