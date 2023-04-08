@@ -1,8 +1,5 @@
 window.addEventListener('load', page);
 let arrayDisplay = [];
-let number1 = 0;
-let number2 = 0;
-let operator = '';
 let displayValue = '';
 
 function page() {
@@ -67,11 +64,12 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
+
     if (b !== 0) {
         return a / b;
     }
-    else{
-        return "You can't divide by 0";
+    else{        
+        return "You can't divide by 0";        
     }
 }
 
@@ -115,8 +113,7 @@ function saveNumbers() {
         else {
             if(aux !== '%' && aux !== '÷' && aux !== '×'
             && aux !== '−' && aux !== '+' && aux !== '='){
-                arrayNumbers[newIndex] += aux;
-                                
+                arrayNumbers[newIndex] += aux;                                
             }
             else {
                 newIndex++;
@@ -201,13 +198,26 @@ function pressPoint() {
     displayValue += '.';
     showOperate();
     arrayDisplay[displayValue.length-1] = '.';
+    disabledPoint();
+    
     console.log(arrayDisplay);
+}
+
+function disabledPoint() {
+    let btnPoint = document.getElementById('btn-point');
+    btnPoint.disabled = true;
+}
+
+function enabledPoint() {
+    let btnPoint = document.getElementById('btn-point');
+    btnPoint.disabled = false;
 }
 
 function pressAdd() {
     displayValue += '+';
     showOperate();
     arrayDisplay[displayValue.length-1] = '+';
+    enabledPoint();
     console.log(arrayDisplay);
 }
 
@@ -215,6 +225,7 @@ function pressSubtract() {
     displayValue += '−';
     showOperate();
     arrayDisplay[displayValue.length-1] = '−';
+    enabledPoint();
     console.log(arrayDisplay);
 }
 
@@ -222,6 +233,7 @@ function pressMultiply() {
     displayValue += '×';
     showOperate();
     arrayDisplay[displayValue.length-1] = '×';
+    enabledPoint();
     console.log(arrayDisplay);
 }
 
@@ -229,6 +241,7 @@ function pressDivide() {
     displayValue += '÷';
     showOperate();
     arrayDisplay[displayValue.length-1] = '÷';
+    enabledPoint();
     console.log(arrayDisplay);
 }
 
@@ -236,6 +249,7 @@ function presPercentage() {
     displayValue += '%';
     showOperate();
     arrayDisplay[displayValue.length-1] = '%';
+    enabledPoint();
     console.log(arrayDisplay);
 }
 
@@ -249,6 +263,7 @@ function pressEqual(){
     console.log(arrayDisplay);
     transformArray();
     displayValue = '';
+    enabledPoint();
     }    
 }
 
